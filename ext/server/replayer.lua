@@ -58,10 +58,15 @@ end
 
 function Replayer:_registerEvents()
 	Events:Subscribe('UpdateManager:Update', self, self._onUpdate)
+	Events:Subscribe('Level:Destroy', self, self._onLevelDestroyed)
 end
 
 function Replayer:_registerHooks()
 	Hooks:Install('Soldier:Damage', 999, self, self._onSoldierDamage)
+end
+
+function Replayer:_onLevelDestroyed()
+	self:stop()
 end
 
 function Replayer:_onSoldierDamage(hook, soldier, damageInfo, damageGiverInfo)
@@ -428,3 +433,4 @@ function Replayer:stop()
 	self._playerIdToReplayId = {}
 	self._vehicles = {}
 end
+
